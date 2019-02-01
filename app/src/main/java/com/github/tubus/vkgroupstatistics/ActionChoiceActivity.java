@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
@@ -24,7 +22,16 @@ public class ActionChoiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_choice);
+        setAllButtons();
+    }
 
+    private void setAllButtons() {
+        setCountButton();
+        setDownloadAllButton();
+        setRepeatingButton();
+    }
+
+    private void setCountButton() {
         final Button button = findViewById(R.id.count_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -41,7 +48,9 @@ public class ActionChoiceActivity extends AppCompatActivity {
                 textView.setText(name);
             }
         });
+    }
 
+    private void setDownloadAllButton() {
         final Button button1 = findViewById(R.id.download_all_button);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -73,6 +82,24 @@ public class ActionChoiceActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void setRepeatingButton() {
+        final Button button3 = findViewById(R.id.repeating_button_id);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                VkRestService vkRestService = new VkRestService();
+                TextView textView = findViewById(R.id.textView3);
+                String name = "";
+                try {
+                    VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
+                    request.setAction(VK_REST_SERVICE_ACTION.REPEATING_ACTION);
+                    name += vkRestService.execute(request).get().getRepeating();
+                } catch (Exception ex) {
+                }
+                textView.setText(name);
+            }
+        });
     }
 }

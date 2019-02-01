@@ -18,9 +18,12 @@
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/linear_layout_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/count_button"
@@ -42,7 +45,7 @@
                 android:layout_width="368dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="8dp"
-                android:text="Count"
+                android:text="@string/count_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -68,7 +71,7 @@
                 android:id="@+id/repeating_button_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button"
+                android:text="@string/repeating_button_name"
                 tools:text="@string/repeating_button_name" />
 
             <TextView

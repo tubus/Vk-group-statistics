@@ -26,33 +26,39 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
 
         switch (action) {
             case COUNT_ACTION:
-                response.setCount(downloadSingleAction());
+                response.setCount(getCountAllPhotosInGroup());
                 break;
             case DOWNLOAD_SINGLE_ACTION:
-                response.setImage(downloadSinglePhoto());
+                response.setImage(downloadAllPhotosInGroup());
+                break;
+            case REPEATING_ACTION:
+                response.setRepeating(getAllRepeatingPostsInGroup());
                 break;
         }
         return response;
     }
 
-    private Integer downloadSingleAction() {
-        // The connection URL
+    private Integer getCountAllPhotosInGroup() {
         String url = "http://185.237.98.189:5823/vk/count/photo/all";
-        // Create a new RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
-        // Add the String message converter
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        // Make the HTTP GET request, marshaling the response to a String
         String result = restTemplate.getForObject(url, String.class);
         return Integer.parseInt(result);
     }
 
-    private List<byte[]> downloadSinglePhoto() {
-        // The connection URL
-        String url = "http://185.237.98.189:5823/vk/download/photos/from/1/to/" + downloadSingleAction();
+    private List<byte[]> downloadAllPhotosInGroup() {
+        String url = "http://185.237.98.189:5823/vk/download/photos/from/1/to/" + getCountAllPhotosInGroup();
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<MessagesWrapper> forEntity = restTemplate.getForEntity(url, MessagesWrapper.class);
         MessagesWrapper messagesWrapper = forEntity.getBody();
         return messagesWrapper.getMessages();
+    }
+
+    private String getAllRepeatingPostsInGroup() {
+        String url = "http://185.237.98.189:5823/vk/group/find/repeating";
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        String result = restTemplate.getForObject(url, String.class);
+        return result;
     }
 }
