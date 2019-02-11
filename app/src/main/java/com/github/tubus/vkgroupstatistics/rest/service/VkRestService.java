@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, VkRestServiceResponseWrapper> {
@@ -29,10 +30,13 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
                 response.setCount(getCountAllPhotosInGroup());
                 break;
             case DOWNLOAD_SINGLE_ACTION:
-                response.setImage(downloadAllPhotosInGroup());
+                response.setImage(downloadSinglePhotoInGroup(request[0].getId()));
                 break;
             case REPEATING_ACTION:
                 response.setRepeating(getAllRepeatingPostsInGroup());
+                break;
+            case DOWNLOAD_ALL_ACTION:
+                response.setImage(downloadAllPhotosInGroup());
                 break;
         }
         return response;
@@ -47,11 +51,14 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
     }
 
     private List<byte[]> downloadAllPhotosInGroup() {
-        String url = "http://185.237.98.189:5823/vk/download/photos/from/1/to/" + getCountAllPhotosInGroup();
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<MessagesWrapper> forEntity = restTemplate.getForEntity(url, MessagesWrapper.class);
-        MessagesWrapper messagesWrapper = forEntity.getBody();
-        return messagesWrapper.getMessages();
+        int count = getCountAllPhotosInGroup();
+        List<byte[]> result = new ArrayList<>();
+
+        for (int index = 1; index <= count; index++) {
+            result.addAll(downloadSinglePhotoInGroup(index));
+        }
+
+        return result;
     }
 
     private String getAllRepeatingPostsInGroup() {
@@ -60,5 +67,13 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         String result = restTemplate.getForObject(url, String.class);
         return result;
+    }
+
+    private List<byte[]> downloadSinglePhotoInGroup(int index) {
+        String url = "http://185.237.98.189:5823/vk/download/photos/from/" + index +"/to/" + index;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<MessagesWrapper> forEntity = restTemplate.getForEntity(url, MessagesWrapper.class);
+        MessagesWrapper messagesWrapper = forEntity.getBody();
+        return messagesWrapper.getMessages();
     }
 }

@@ -37,3 +37,6 @@ url:    https://stackoverflow.com/questions/7620401/how-to-convert-byte-array-to
 
 answer: findViewById(R.id.button_id);
 url:    https://developer.android.com/reference/android/widget/Button
+
+#misc
+mtp://[usb:003,016]/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/.estrongs/.app_icon_back
