@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -58,16 +59,17 @@ public class ActionChoiceActivity extends AppCompatActivity {
     private void setDownloadSinglePhotoButton() {
         final Button button1 = findViewById(R.id.download_single_button);
         final TextInputEditText textInputEditText = findViewById(R.id.text_input);
-        int tempId = 1;
-        String text = textInputEditText.getText().toString();
-        try {
-            tempId = Integer.parseInt(text);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        final int id = tempId;
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                int tempId = 1;
+                String text = textInputEditText.getText().toString();
+                try {
+                    tempId = Integer.parseInt(text);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                final int id = tempId;
+
                 VkRestService vkRestService = new VkRestService();
 
                 List<byte[]> names = Collections.emptyList();
@@ -85,7 +87,7 @@ public class ActionChoiceActivity extends AppCompatActivity {
 
                     imageView.clearColorFilter();
                     imageView.refreshDrawableState();
-                    writeFileToStorage("vkgroupstatistics_" + count + ".jpeg", bitmap);
+                    writeFileToStorage("vkgroupstatistics_" + id + ".jpeg", bitmap);
                     imageView.setImageBitmap(bitmap);
                     imageView.refreshDrawableState();
 
@@ -139,6 +141,7 @@ public class ActionChoiceActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                 }
                 textView.setText(name);
+                Linkify.addLinks(textView, Linkify.PHONE_NUMBERS | Linkify.WEB_URLS);
             }
         });
     }
@@ -153,7 +156,7 @@ public class ActionChoiceActivity extends AppCompatActivity {
         Log.i("LOAD", root + fname);
         try {
             FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
         } catch (Exception e) {
