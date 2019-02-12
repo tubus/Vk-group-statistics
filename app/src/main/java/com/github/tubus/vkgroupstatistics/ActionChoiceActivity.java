@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Collections;
