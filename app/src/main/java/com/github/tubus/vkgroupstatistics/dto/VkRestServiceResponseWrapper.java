@@ -13,6 +13,8 @@ public class VkRestServiceResponseWrapper {
 
     private String repeating;
 
+    private String subscriptionStats;
+
     public Integer getCount() {
         return count;
     }
@@ -35,5 +37,13 @@ public class VkRestServiceResponseWrapper {
 
     public void setRepeating(String repeating) {
         this.repeating = repeating;
+    }
+
+    public String getSubscriptionStats() {
+        return subscriptionStats;
+    }
+
+    public void setSubscriptionStats(String subscriptionStats) {
+        this.subscriptionStats = subscriptionStats;
     }
 }

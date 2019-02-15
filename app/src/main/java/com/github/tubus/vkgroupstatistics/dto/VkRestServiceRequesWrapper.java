@@ -9,6 +9,8 @@ public class VkRestServiceRequesWrapper {
 
     private Integer id;
 
+    private Integer hours = 24;
+
     public VK_REST_SERVICE_ACTION getAction() {
         return action;
     }
@@ -23,5 +25,13 @@ public class VkRestServiceRequesWrapper {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getHours() {
+        return hours;
+    }
+
+    public void setHours(Integer hours) {
+        this.hours = hours;
     }
 }

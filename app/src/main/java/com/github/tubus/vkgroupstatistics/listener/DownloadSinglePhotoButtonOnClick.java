@@ -13,14 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.github.tubus.vkgroupstatistics.consts.Consts.DEFAULT_PHOTO_ID;
 import static com.github.tubus.vkgroupstatistics.utils.FileUtils.writeFileToStorage;
+import static com.github.tubus.vkgroupstatistics.utils.ParseUtils.parseIntegerOrDefault;
 
 public class DownloadSinglePhotoButtonOnClick implements View.OnClickListener, Runnable {
 
     private final Activity activity;
     private final TextInputEditText textInputEditText;
     private final ImageView imageView;
-
-    private final VkRestService vkRestService = new VkRestService();
 
     public DownloadSinglePhotoButtonOnClick(TextInputEditText textInputEditText,  ImageView imageView,
                                             Activity activity) {
@@ -37,7 +36,9 @@ public class DownloadSinglePhotoButtonOnClick implements View.OnClickListener, R
     @Override
     public void run() {
         synchronized (this) {
-            final int photoId = parsePhotoIdOrDefault(textInputEditText.getText().toString(), DEFAULT_PHOTO_ID);
+            final VkRestService vkRestService = new VkRestService();
+
+            final int photoId = parseIntegerOrDefault(textInputEditText.getText().toString(), DEFAULT_PHOTO_ID);
 
             List<byte[]> images = new ArrayList<>();
             try {
@@ -54,15 +55,6 @@ public class DownloadSinglePhotoButtonOnClick implements View.OnClickListener, R
                 writeFileToStorage("vkgroupstatistics_" + photoId + ".jpeg", bitmap, activity.getApplicationContext());
             }
         }
-    }
-
-    private int parsePhotoIdOrDefault(String Id, int defaultId) {
-        int result = defaultId;
-        try {
-            result = Integer.parseInt(Id);
-        } catch (Exception ex) {
-        }
-        return result;
     }
 
     private class RunImageViewUpdateOnUI implements Runnable {

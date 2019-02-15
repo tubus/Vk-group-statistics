@@ -10,6 +10,7 @@ import com.github.tubus.vkgroupstatistics.listener.CountButtonOnClick;
 import com.github.tubus.vkgroupstatistics.listener.DownloadMultiplePhotoButtonOnClick;
 import com.github.tubus.vkgroupstatistics.listener.DownloadSinglePhotoButtonOnClick;
 import com.github.tubus.vkgroupstatistics.listener.RepeatingButtonOnClick;
+import com.github.tubus.vkgroupstatistics.listener.SubcriptionStatisticsButtonOnClick;
 
 public class ActionChoiceActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class ActionChoiceActivity extends AppCompatActivity {
 
     private void setAllButtons() {
         final TextInputEditText textInputEditText = findViewById(R.id.download_single_input_count);
+        final TextInputEditText hours_input = findViewById(R.id.hours_input);
         final ImageView imageView = findViewById(R.id.imageView);
         final ProgressBar bar = findViewById(R.id.progressBar);
 
@@ -33,5 +35,8 @@ public class ActionChoiceActivity extends AppCompatActivity {
                 new DownloadMultiplePhotoButtonOnClick(imageView, bar, this));
         findViewById(R.id.repeating_button_id).setOnClickListener(
                 new RepeatingButtonOnClick((TextView) findViewById(R.id.repeating_text_view), this));
+        findViewById(R.id.subscription_statistics_button).setOnClickListener(
+                new SubcriptionStatisticsButtonOnClick((TextView) findViewById(R.id.subscription_statistics_text_view), hours_input, this)
+        );
     }
 }

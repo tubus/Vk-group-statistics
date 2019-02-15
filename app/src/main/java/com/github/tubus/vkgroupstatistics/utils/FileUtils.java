@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 
 public class FileUtils {
     public static void writeFileToStorage(String fname, Bitmap bitmap, Context context) {
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString()+ "/Camera/vkGroup";
+        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString()+ "/Camera/vkGroup/temp";
         File myDir = new File(root);
         myDir.mkdirs();
         File file = new File(myDir, fname);
