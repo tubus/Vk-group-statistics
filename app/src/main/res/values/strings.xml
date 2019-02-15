@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Vk group statistics</string>
     <string name="count_button_name">Count photos</string>
-    <string name="download_all_button_name">Download all photos</string>
+    <string name="download_multiple_button_name">Download all photos</string>
     <string name="download_single_button_name">Download a photo</string>
     <string name="repeating_button_name">Get repeating</string>
     <string name="count_text">count</string>
