@@ -1,7 +1,5 @@
 package com.github.tubus.vkgroupstatistics.dto;
 
-import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
 import java.util.List;
 
 public class VkRestServiceResponseWrapper {
@@ -12,6 +10,8 @@ public class VkRestServiceResponseWrapper {
     private Integer count;
 
     private List<byte[]> image;
+
+    private String repeating;
 
     public Integer getCount() {
         return count;
@@ -27,5 +27,13 @@ public class VkRestServiceResponseWrapper {
 
     public void setImage(List<byte[]> image) {
         this.image = image;
+    }
+
+    public String getRepeating() {
+        return repeating;
+    }
+
+    public void setRepeating(String repeating) {
+        this.repeating = repeating;
     }
 }

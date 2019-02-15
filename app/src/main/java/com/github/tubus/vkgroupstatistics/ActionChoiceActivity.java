@@ -1,22 +1,15 @@
 package com.github.tubus.vkgroupstatistics;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
-import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import com.github.tubus.vkgroupstatistics.listener.CountButtonOnClick;
+import com.github.tubus.vkgroupstatistics.listener.DownloadMultiplePhotoButtonOnClick;
+import com.github.tubus.vkgroupstatistics.listener.DownloadSinglePhotoButtonOnClick;
+import com.github.tubus.vkgroupstatistics.listener.RepeatingButtonOnClick;
 
 public class ActionChoiceActivity extends AppCompatActivity {
 
@@ -24,55 +17,21 @@ public class ActionChoiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_choice);
+        setAllButtons();
+    }
 
-        final Button button = findViewById(R.id.count_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                VkRestService vkRestService = new VkRestService();
-                TextView textView = findViewById(R.id.textView);
-                String name = "";
-                try {
-                    VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-                    request.setAction(VK_REST_SERVICE_ACTION.COUNT_ACTION);
-                    name += vkRestService.execute(request).get().getCount();
-                } catch (Exception ex) {
-                }
-                textView.setText(name);
-            }
-        });
+    private void setAllButtons() {
+        final TextInputEditText textInputEditText = findViewById(R.id.download_single_input_count);
+        final ImageView imageView = findViewById(R.id.imageView);
+        final ProgressBar bar = findViewById(R.id.progressBar);
 
-        final Button button1 = findViewById(R.id.download_all_button);
-        button1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                VkRestService vkRestService = new VkRestService();
-
-                List<byte[]> names = Collections.emptyList();
-                try {
-                    VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-                    request.setAction(VK_REST_SERVICE_ACTION.DOWNLOAD_SINGLE_ACTION);
-                    names = vkRestService.execute(request).get().getImage();
-                } catch (Exception ex) {
-                }
-                ImageView imageView = findViewById(R.id.imageView2);
-                int count = 1;
-                for (byte[] name : names) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(name, 0, name.length);
-
-                    try (FileOutputStream out = new FileOutputStream(count + ".jpeg")) {
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-                        // PNG is a lossless format, the compression factor (100) is ignored
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    imageView.setImageBitmap(bitmap);
-                    imageView.refreshDrawableState();
-
-                    count++;
-                }
-            }
-        });
-
+        findViewById(R.id.count_button).setOnClickListener(
+                new CountButtonOnClick((TextView) findViewById(R.id.countTextView), this));
+        findViewById(R.id.download_single_button).setOnClickListener(
+                new DownloadSinglePhotoButtonOnClick(textInputEditText, imageView,this));
+        findViewById(R.id.download_multiple_button).setOnClickListener(
+                new DownloadMultiplePhotoButtonOnClick(imageView, bar, this));
+        findViewById(R.id.repeating_button_id).setOnClickListener(
+                new RepeatingButtonOnClick((TextView) findViewById(R.id.repeating_text_view), this));
     }
 }

@@ -1,0 +1,42 @@
+# spring-for-android-could-not-extract-response-no-suitable-httpmessageconverte
+
+answer: For the default JSON HttpMessageConverter, you'll need to add either Jackson 1 or Jackson 2 to your classpath.
+url:    https://stackoverflow.com/questions/25141577/spring-for-android-could-not-extract-response-no-suitable-httpmessageconverte
+add:    https://www.baeldung.com/spring-rest-template-list
+add:    https://www.leveluplunch.com/java/tutorials/038-retrieve-file-spring-resttemplate/
+
+# gradle build
+
+answer: ./gradlew installDebug
+url:    https://developer.android.com/studio/build/building-cmdline
+
+# android-os-networkonmainthreadexception
+
+answer: extends AsyncTask<TypeReturn, TypeStatus, TypeRecieve>
+url:    https://stackoverflow.com/questions/6343166/how-do-i-fix-android-os-networkonmainthreadexception
+add:    https://developer.android.com/reference/android/os/AsyncTask
+
+# android permissions
+
+answer: <uses-permission android:name="android.permission.INTERNET" /> inside <manifest xlmns:android...>
+url:    https://stackoverflow.com/questions/2169294/how-to-add-manifest-permission-to-an-application
+
+answer: <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+url:    https://stackoverflow.com/questions/649154/save-bitmap-to-location
+
+# spring for android
+
+url: http://projects.spring.io/spring-android/
+
+# image bitmap from byte array (byte[])
+
+answer: Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+url:    https://stackoverflow.com/questions/7620401/how-to-convert-byte-array-to-bitmap
+
+# working with resources
+
+answer: findViewById(R.id.button_id);
+url:    https://developer.android.com/reference/android/widget/Button
+
+#misc
+mtp://[usb:003,016]/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C/.estrongs/.app_icon_back
