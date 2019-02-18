@@ -22,10 +22,10 @@ public class ActionChoiceActivity extends AppCompatActivity {
     }
 
     private void setAllButtons() {
-        final TextInputEditText textInputEditText = findViewById(R.id.download_single_input_count);
-        final TextInputEditText hours_input = findViewById(R.id.hours_input);
-        final ImageView imageView = findViewById(R.id.imageView);
-        final ProgressBar bar = findViewById(R.id.progressBar);
+        final TextInputEditText textInputEditText = (TextInputEditText) findViewById(R.id.download_single_input_count);
+        final TextInputEditText hours_input = (TextInputEditText) findViewById(R.id.hours_input);
+        final ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        final ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
 
         findViewById(R.id.count_button).setOnClickListener(
                 new CountButtonOnClick((TextView) findViewById(R.id.countTextView), this));
