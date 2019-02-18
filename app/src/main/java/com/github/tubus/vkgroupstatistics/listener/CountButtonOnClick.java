@@ -46,6 +46,7 @@ public class CountButtonOnClick implements View.OnClickListener, Runnable {
 
         @Override
         public void run() {
+            textView.setVisibility(View.VISIBLE);
             textView.setText(countData);
         }
     }
