@@ -11,6 +11,8 @@ public class VkRestServiceRequesWrapper {
 
     private Integer hours = 24;
 
+    private String changedStatus;
+
     public VK_REST_SERVICE_ACTION getAction() {
         return action;
     }
@@ -33,5 +35,13 @@ public class VkRestServiceRequesWrapper {
 
     public void setHours(Integer hours) {
         this.hours = hours;
+    }
+
+    public String getChangedStatus() {
+        return changedStatus;
+    }
+
+    public void setChangedStatus(String changedStatus) {
+        this.changedStatus = changedStatus;
     }
 }
