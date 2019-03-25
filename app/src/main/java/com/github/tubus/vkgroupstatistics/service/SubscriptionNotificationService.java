@@ -11,11 +11,10 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-
 import com.github.tubus.vkgroupstatistics.ActionChoiceActivity;
 import com.github.tubus.vkgroupstatistics.R;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,17 +27,17 @@ import java.util.concurrent.ExecutionException;
 
 public class SubscriptionNotificationService extends Service {
 
-    public static final long SUBSCRIPTION_CHECKING_INTERVAL = /*5 * 60 **/ 1000;
-
+    //TODO: put this settings into settings file or into application settings
+    public static final long SUBSCRIPTION_CHECKING_INTERVAL = 5 * 60 * 1000;
+    public static final long SUBSCRIPTION_CHECKING_DELAY = 1000;
     public static final int CHECKING_LAST_HOURS = 24;
-
     public static final long KEEPING_SUBSCRIBED_LATELY_TIME_MILLIS = 2 * 60 * 60 * 1000;
 
     private Map<String, Long> subscribedLately = new HashMap<>();
 
     private Timer timer = null;
 
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
 
     @Nullable
     @Override
@@ -55,33 +54,33 @@ public class SubscriptionNotificationService extends Service {
         } else {
             timer = new Timer();
         }
-        timer.scheduleAtFixedRate(new CheckSubscriptionTask(), 0, SUBSCRIPTION_CHECKING_INTERVAL);
+        timer.scheduleAtFixedRate(new CheckSubscriptionTask(), SUBSCRIPTION_CHECKING_DELAY, SUBSCRIPTION_CHECKING_INTERVAL);
     }
 
     private class CheckSubscriptionTask extends TimerTask {
 
         @Override
         public void run() {
-            mHandler.post(new TaskWrapper());
+            handler.post(new TaskWrapper());
         }
     }
 
     private class TaskWrapper implements Runnable {
 
-        private int id = 23;
+        private int notificationId = 23;
 
         @Override
         public void run() {
+            VkRestServiceRequest request = VkRestServiceRequest.builder()
+            .setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_LAST_ACTION)
+            .setHours(CHECKING_LAST_HOURS)
+            .setChangedStatus("subscribed").build();
 
-            VkRestService vkRestService = new VkRestService();
-            VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-            request.setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_LAST_ACTION);
-            request.setHours(CHECKING_LAST_HOURS);
-            request.setChangedStatus("subscribed");
             List<String> usersList = new ArrayList<>();
             try {
-                usersList.addAll(vkRestService.execute(request).get().getUsersList());
+                usersList.addAll(new VkRestService().execute(request).get().getUsersList());
             } catch (InterruptedException | ExecutionException e) {
+                //TODO: remake it with logging
                 e.printStackTrace();
             }
             List<String> toShow = new ArrayList<>();
@@ -120,29 +119,17 @@ public class SubscriptionNotificationService extends Service {
                             .setSmallIcon(R.drawable.background_light)
                             .setContentTitle("Subscibed!")
                             .setContentText(user);
-// Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(getApplicationContext(), ActionChoiceActivity.class);
-
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-// Adds the back stack for the Intent (but not the Intent itself)
             stackBuilder.addParentStack(ActionChoiceActivity.class);
-// Adds the Intent that starts the Activity to the top of the stack
             stackBuilder.addNextIntent(resultIntent);
-            PendingIntent resultPendingIntent =
-                    stackBuilder.getPendingIntent(
-                            0,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                            0, PendingIntent.FLAG_UPDATE_CURRENT );
             mBuilder.setContentIntent(resultPendingIntent);
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-            mNotificationManager.notify(id, mBuilder.build());
-            id++;
+            mNotificationManager.notify(notificationId, mBuilder.build());
+            notificationId++;
         }
     }
 }

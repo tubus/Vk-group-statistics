@@ -2,18 +2,14 @@ package com.github.tubus.vkgroupstatistics.listener;
 
 import android.app.Activity;
 import android.support.design.widget.TextInputEditText;
-import android.text.Editable;
 import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
-
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceResponseWrapper;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
 import java.util.concurrent.ExecutionException;
-
 import static com.github.tubus.vkgroupstatistics.utils.ParseUtils.parseIntegerOrDefault;
 
 public class SubcriptionStatisticsButtonOnClick implements View.OnClickListener, Runnable {
@@ -35,16 +31,15 @@ public class SubcriptionStatisticsButtonOnClick implements View.OnClickListener,
 
     @Override
     public void run() {
-        VkRestService vkRestService = new VkRestService();
         String text = textInputEditText.getText().toString();
         Integer hours = parseIntegerOrDefault(text, 24);
 
-        VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-        request.setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_STATISTICS_ACTION);
-        request.setHours(hours);
+        VkRestServiceRequest request = VkRestServiceRequest.builder()
+        .setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_STATISTICS_ACTION)
+        .setHours(hours).build();
         String subscriptionStats = "";
         try {
-            VkRestServiceResponseWrapper vkRestServiceResponseWrapper = vkRestService.execute(request).get();
+            VkRestServiceResponseWrapper vkRestServiceResponseWrapper =  new VkRestService().execute(request).get();
             subscriptionStats += vkRestServiceResponseWrapper.getSubscriptionStats();
         } catch (InterruptedException | ExecutionException e) {
         }

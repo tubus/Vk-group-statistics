@@ -3,7 +3,7 @@ package com.github.tubus.vkgroupstatistics.rest.service;
 import android.os.AsyncTask;
 import com.github.tubus.vkgroupstatistics.dto.MessagesWrapper;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceResponseWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import static com.github.tubus.vkgroupstatistics.consts.Consts.BASE_VK_REST_SERVICE_URL;
 
-public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, VkRestServiceResponseWrapper> {
+public class VkRestService extends AsyncTask<VkRestServiceRequest, Void, VkRestServiceResponseWrapper> {
 
     RestTemplate restTemplate = new RestTemplate();
 
@@ -22,7 +22,7 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
     }
 
     @Override
-    protected VkRestServiceResponseWrapper doInBackground(VkRestServiceRequesWrapper... request) {
+    protected VkRestServiceResponseWrapper doInBackground(VkRestServiceRequest... request) {
         if (request.length != 1) {
             return null;
         }

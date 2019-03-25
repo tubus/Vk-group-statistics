@@ -7,7 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.view.View;
 import android.widget.ImageView;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +36,15 @@ public class DownloadSinglePhotoButtonOnClick implements View.OnClickListener, R
     @Override
     public void run() {
         synchronized (this) {
-            final VkRestService vkRestService = new VkRestService();
 
             final int photoId = parseIntegerOrDefault(textInputEditText.getText().toString(), DEFAULT_PHOTO_ID);
 
             List<byte[]> images = new ArrayList<>();
             try {
-                VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-                request.setAction(VK_REST_SERVICE_ACTION.DOWNLOAD_SINGLE_ACTION);
-                request.setId(photoId);
-                images.addAll(vkRestService.execute(request).get().getImage());
+                VkRestServiceRequest request = VkRestServiceRequest.builder()
+                .setAction(VK_REST_SERVICE_ACTION.DOWNLOAD_SINGLE_ACTION)
+                .setId(photoId).build();
+                images.addAll(new VkRestService().execute(request).get().getImage());
             } catch (Exception ex) {
             }
             if (!images.isEmpty()) {
