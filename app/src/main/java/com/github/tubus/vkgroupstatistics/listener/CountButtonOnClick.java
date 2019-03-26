@@ -35,6 +35,7 @@ public class CountButtonOnClick implements View.OnClickListener, Runnable {
         }
         activity.runOnUiThread(new RunImageViewUpdateOnUI(name));
     }
+
     private class RunImageViewUpdateOnUI implements Runnable {
 
         private String countData;
@@ -49,5 +50,4 @@ public class CountButtonOnClick implements View.OnClickListener, Runnable {
             textView.setText(countData);
         }
     }
-
 }
