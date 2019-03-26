@@ -5,15 +5,13 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
 
 public class RepeatingButtonOnClick implements View.OnClickListener, Runnable {
 
     private final Activity activity;
     private final TextView repeating_text_view;
-
-    VkRestService vkRestService = new VkRestService();
 
     public RepeatingButtonOnClick(TextView repeating_text_view, Activity activity) {
         this.repeating_text_view = repeating_text_view;
@@ -29,9 +27,9 @@ public class RepeatingButtonOnClick implements View.OnClickListener, Runnable {
     public void run() {
         String name = "";
         try {
-            VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-            request.setAction(VK_REST_SERVICE_ACTION.REPEATING_ACTION);
-            name += vkRestService.execute(request).get().getRepeating();
+            VkRestServiceRequest request = VkRestServiceRequest.builder()
+            .setAction(VK_REST_SERVICE_ACTION.REPEATING_ACTION).build();
+            name += new VkRestService().execute(request).get().getRepeating();
         } catch (Exception ex) {
         }
         activity.runOnUiThread(new RunTextViewUpdateOnUI(name));

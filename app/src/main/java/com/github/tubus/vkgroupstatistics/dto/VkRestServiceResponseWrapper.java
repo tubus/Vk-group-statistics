@@ -15,6 +15,8 @@ public class VkRestServiceResponseWrapper {
 
     private String subscriptionStats;
 
+    private List<String> usersList;
+
     public Integer getCount() {
         return count;
     }
@@ -45,5 +47,13 @@ public class VkRestServiceResponseWrapper {
 
     public void setSubscriptionStats(String subscriptionStats) {
         this.subscriptionStats = subscriptionStats;
+    }
+
+    public List<String> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<String> usersList) {
+        this.usersList = usersList;
     }
 }

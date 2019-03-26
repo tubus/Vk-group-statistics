@@ -1,0 +1,2 @@
+FUTURE issues:
+- рассмотреть вопрос о замене методов runOnUIThread методами класса AsyncTask

@@ -3,16 +3,18 @@ package com.github.tubus.vkgroupstatistics.rest.service;
 import android.os.AsyncTask;
 import com.github.tubus.vkgroupstatistics.dto.MessagesWrapper;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceResponseWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import static com.github.tubus.vkgroupstatistics.consts.Consts.BASE_VK_REST_SERVICE_URL;
 
-public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, VkRestServiceResponseWrapper> {
+public class VkRestService extends AsyncTask<VkRestServiceRequest, Void, VkRestServiceResponseWrapper> {
 
     RestTemplate restTemplate = new RestTemplate();
 
@@ -20,7 +22,7 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
     }
 
     @Override
-    protected VkRestServiceResponseWrapper doInBackground(VkRestServiceRequesWrapper... request) {
+    protected VkRestServiceResponseWrapper doInBackground(VkRestServiceRequest... request) {
         if (request.length != 1) {
             return null;
         }
@@ -42,6 +44,10 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
                 break;
             case SUBSCRIPTION_STATISTICS_ACTION:
                 response.setSubscriptionStats(getSubscriptionStatistics(request[0].getHours()));
+                break;
+            case SUBSCRIPTION_LAST_ACTION:
+                response.setUsersList(getChangedStatusPerLastHourList(request[0].getHours(),
+                        request[0].getChangedStatus()));
                 break;
         }
         return response;
@@ -79,6 +85,20 @@ public class VkRestService extends AsyncTask<VkRestServiceRequesWrapper, Void, V
         String resultPart1 = restTemplate.getForObject(url1, String.class);
         String resultPart2 = restTemplate.getForObject(url2, String.class);
         return "Subscribed: \n" + resultPart1 + "\n\nUnsubscribed: \n" + resultPart2;
+    }
+
+    private List<String> getChangedStatusPerLastHourList(int hours, String changedStatus) {
+        if (!"subscribed".equals(changedStatus) && !"unsubscribed".equals(changedStatus)) {
+            //Follower could either be subscribed or unsubscribed as a status
+            return Collections.emptyList();
+        }
+        String url = BASE_VK_REST_SERVICE_URL + "/vk/subscription/" + changedStatus + "/hours/" + hours;
+        String result = restTemplate.getForObject(url, String.class);
+        if (result == null || "".equals(result)) {
+            return Collections.emptyList();
+        }
+        String[] splitted = result.split("\n");
+        return  Arrays.asList(splitted);
     }
 
     private List<byte[]> downloadSinglePhotoInGroup(int index) {

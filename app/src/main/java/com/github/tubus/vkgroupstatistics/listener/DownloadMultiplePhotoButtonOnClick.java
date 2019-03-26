@@ -6,19 +6,16 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequesWrapper;
+import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
 import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
-
 import static com.github.tubus.vkgroupstatistics.utils.FileUtils.writeFileToStorage;
 
 public class DownloadMultiplePhotoButtonOnClick implements View.OnClickListener, Runnable {
+
     private ImageView imageView;
     private ProgressBar bar;
     private Activity activity;
-
-    VkRestService vkRestService = new VkRestService();
 
     public DownloadMultiplePhotoButtonOnClick(ImageView imageView, ProgressBar bar, Activity activity) {
         this.imageView = imageView;
@@ -33,16 +30,15 @@ public class DownloadMultiplePhotoButtonOnClick implements View.OnClickListener,
 
     @Override
     public void run() {
-        VkRestServiceRequesWrapper request1 = new VkRestServiceRequesWrapper();
-        request1.setAction(VK_REST_SERVICE_ACTION.COUNT_ACTION);
+        VkRestServiceRequest countRequest = VkRestServiceRequest.builder()
+        .setAction(VK_REST_SERVICE_ACTION.COUNT_ACTION).build();
         try {
-            Integer count = vkRestService.execute(request1).get().getCount();
+            Integer count = new VkRestService().execute(countRequest).get().getCount();
             for (int index = 1; index <= count; index++) {
-                VkRestService vkRestServiceC = new VkRestService();
-                VkRestServiceRequesWrapper request = new VkRestServiceRequesWrapper();
-                request.setAction(VK_REST_SERVICE_ACTION.DOWNLOAD_SINGLE_ACTION);
-                request.setId(index);
-                byte[] image = vkRestServiceC.execute(request).get().getImage().get(0);
+                VkRestServiceRequest request = VkRestServiceRequest.builder()
+                .setAction(VK_REST_SERVICE_ACTION.DOWNLOAD_SINGLE_ACTION)
+                .setId(index).build();
+                byte[] image = new VkRestService().execute(request).get().getImage().get(0);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
                 activity.runOnUiThread(new RunImageViewUpdateOnUI(bitmap));
                 activity.runOnUiThread(new RunProgresBarUpdateOnUI(index / count));
