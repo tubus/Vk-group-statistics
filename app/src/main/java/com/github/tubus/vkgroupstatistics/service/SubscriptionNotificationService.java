@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
@@ -71,44 +72,46 @@ public class SubscriptionNotificationService extends Service {
 
         @Override
         public void run() {
-            VkRestServiceRequest request = VkRestServiceRequest.builder()
-            .setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_LAST_ACTION)
-            .setHours(CHECKING_LAST_HOURS)
-            .setChangedStatus("subscribed").build();
+            if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("notifications_new_message", false)) {
+                VkRestServiceRequest request = VkRestServiceRequest.builder()
+                        .setAction(VK_REST_SERVICE_ACTION.SUBSCRIPTION_LAST_ACTION)
+                        .setHours(CHECKING_LAST_HOURS)
+                        .setChangedStatus("subscribed").build();
 
-            List<String> usersList = new ArrayList<>();
-            try {
-                usersList.addAll(new VkRestService().execute(request).get().getUsersList());
-            } catch (InterruptedException | ExecutionException e) {
-                //TODO: remake it with logging
-                e.printStackTrace();
-            }
-            List<String> toShow = new ArrayList<>();
-            for (String s : usersList) {
-                if (!subscribedLately.containsKey(s)) {
-                    subscribedLately.put(s, System.currentTimeMillis());
-                    toShow.add(s);
-                }
-            }
-
-            Map<String, Long> subscribedLatelyRefreshed = new HashMap<>();
-            Set<String> strings = subscribedLately.keySet();
-            for (String user : strings) {
-                Long timeUserStartedFollowing = subscribedLately.get(user);
-                if (System.currentTimeMillis() - timeUserStartedFollowing < KEEPING_SUBSCRIBED_LATELY_TIME_MILLIS) {
-                    subscribedLatelyRefreshed.put(user, timeUserStartedFollowing);
-                }
-            }
-            subscribedLately.clear();
-            subscribedLately.putAll(subscribedLatelyRefreshed);
-
-
-            for (int index = 0; index < toShow.size(); index++) {
-                Toast.makeText(getApplicationContext(), toShow.get(index) + " subscribed", Toast.LENGTH_SHORT).show();
-                call(toShow.get(index));
+                List<String> usersList = new ArrayList<>();
                 try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
+                    usersList.addAll(new VkRestService().execute(request).get().getUsersList());
+                } catch (InterruptedException | ExecutionException e) {
+                    //TODO: remake it with logging
+                    e.printStackTrace();
+                }
+                List<String> toShow = new ArrayList<>();
+                for (String s : usersList) {
+                    if (!subscribedLately.containsKey(s)) {
+                        subscribedLately.put(s, System.currentTimeMillis());
+                        toShow.add(s);
+                    }
+                }
+
+                Map<String, Long> subscribedLatelyRefreshed = new HashMap<>();
+                Set<String> strings = subscribedLately.keySet();
+                for (String user : strings) {
+                    Long timeUserStartedFollowing = subscribedLately.get(user);
+                    if (System.currentTimeMillis() - timeUserStartedFollowing < KEEPING_SUBSCRIBED_LATELY_TIME_MILLIS) {
+                        subscribedLatelyRefreshed.put(user, timeUserStartedFollowing);
+                    }
+                }
+                subscribedLately.clear();
+                subscribedLately.putAll(subscribedLatelyRefreshed);
+
+
+                for (int index = 0; index < toShow.size(); index++) {
+                    Toast.makeText(getApplicationContext(), toShow.get(index) + " subscribed", Toast.LENGTH_SHORT).show();
+                    call(toShow.get(index));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
         }

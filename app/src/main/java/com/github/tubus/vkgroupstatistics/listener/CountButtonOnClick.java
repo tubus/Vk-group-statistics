@@ -32,6 +32,7 @@ public class CountButtonOnClick implements View.OnClickListener, Runnable {
 
             name += new VkRestService().execute(request).get().getCount();
         } catch (Exception ex) {
+            name += "An error occured: \n" + ex.getMessage();
         }
         activity.runOnUiThread(new RunImageViewUpdateOnUI(name));
     }

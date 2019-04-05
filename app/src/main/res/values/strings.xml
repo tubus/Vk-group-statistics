@@ -1,9 +1,26 @@
 <resources>
-    <string name="app_name">Vk group statistics</string>
-    <string name="count_button_name">Count photos</string>
-    <string name="download_multiple_button_name">Download all photos</string>
-    <string name="download_single_button_name">Download a photo</string>
-    <string name="repeating_button_name">Get repeating</string>
+    <string name="app_name">Статистика групп вконтакте</string>
+    <string name="count_button_name">Подсчитать количество изображений в группе</string>
+    <string name="download_multiple_button_name">Скачать все изображения из группы в локальное хранилище</string>
+    <string name="download_single_button_name">Скачать выбранное изображение из группы в локальное хранилище</string>
+    <string name="repeating_button_name">Получить статистику повторяющихся постоа</string>
     <string name="count_text">count</string>
-    <string name="subscription_statistics">Get subscription statistics</string>
+    <string name="subscription_statistics">Получить статистику подписок за заданное время</string>
+    <string name="title_activity_settings">Настройки</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">Общие настройки</string>
+
+    <string name="pref_title_display_name">Имя пользователя</string>
+    <string name="pref_default_display_name">Дана Майдана</string>
+
+    <string name="pref_title_group_name">Короткое имя группы или её id</string>
+    <string name="pref_default_group_name">nitherlands_can_think</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Настройки уведомлений</string>
+    <string name="pref_title_new_follower_notifications">Уведомление о новых подписчиках</string>
+
 </resources>
