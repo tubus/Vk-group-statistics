@@ -43,7 +43,7 @@ public class LauncherActivity extends AppCompatActivity {
             public void run() {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class)); //TODO: startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
-        }, 40); //TODO: 4000
+        }, 4000);
     }
 
 
