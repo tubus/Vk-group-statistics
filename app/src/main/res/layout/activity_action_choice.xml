@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_light"
     android:theme="@style/AppTheme"
-    tools:context=".ActionChoiceActivity">
+    tools:context=".activities.ActionChoiceActivity">
 
     <ScrollView
         android:id="@+id/scroll_layout_id"

@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics;
+package com.github.tubus.vkgroupstatistics.preferencies;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

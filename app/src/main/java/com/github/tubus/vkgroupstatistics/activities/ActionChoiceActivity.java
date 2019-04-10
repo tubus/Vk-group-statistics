@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics;
+package com.github.tubus.vkgroupstatistics.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.github.tubus.vkgroupstatistics.R;
 import com.github.tubus.vkgroupstatistics.listener.CountButtonOnClick;
 import com.github.tubus.vkgroupstatistics.listener.DownloadMultiplePhotoButtonOnClick;
 import com.github.tubus.vkgroupstatistics.listener.DownloadSinglePhotoButtonOnClick;

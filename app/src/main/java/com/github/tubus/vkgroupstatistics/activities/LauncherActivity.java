@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics;
+package com.github.tubus.vkgroupstatistics.activities;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.github.tubus.vkgroupstatistics.R;
 
 public class LauncherActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics;
+package com.github.tubus.vkgroupstatistics.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import com.github.tubus.vkgroupstatistics.R;
+import com.github.tubus.vkgroupstatistics.preferencies.AppCompatPreferenceActivity;
 import java.util.List;
 
 public class Settings extends AppCompatPreferenceActivity {

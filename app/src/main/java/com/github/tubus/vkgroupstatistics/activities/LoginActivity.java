@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics;
+package com.github.tubus.vkgroupstatistics.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,6 +29,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.github.tubus.vkgroupstatistics.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -334,8 +336,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                //finish();
+                startActivity(new Intent(getApplicationContext(), ActionChoiceActivity.class));
+                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -349,4 +351,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-
