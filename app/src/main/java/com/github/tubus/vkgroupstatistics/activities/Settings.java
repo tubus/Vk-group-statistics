@@ -41,7 +41,7 @@ public class Settings extends AppCompatPreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             default:
-                startActivity(new Intent(this, ActionChoiceActivity.class));
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
