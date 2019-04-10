@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-import com.github.tubus.vkgroupstatistics.ActionChoiceActivity;
+import com.github.tubus.vkgroupstatistics.activities.ActionChoiceActivity;
 import com.github.tubus.vkgroupstatistics.R;
 import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
 import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
