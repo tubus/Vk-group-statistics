@@ -3,9 +3,9 @@ package com.github.tubus.vkgroupstatistics.listener;
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
-import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
-import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
+import com.github.tubus.vkgroupstatistics.restful.dto.VK_REST_SERVICE_ACTION;
+import com.github.tubus.vkgroupstatistics.restful.dto.VkRestServiceRequest;
+import com.github.tubus.vkgroupstatistics.restful.service.VkRestService;
 
 public class CountButtonOnClick implements View.OnClickListener, Runnable {
 

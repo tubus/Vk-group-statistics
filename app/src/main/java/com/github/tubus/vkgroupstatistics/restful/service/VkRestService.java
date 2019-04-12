@@ -1,10 +1,10 @@
-package com.github.tubus.vkgroupstatistics.rest.service;
+package com.github.tubus.vkgroupstatistics.restful.service;
 
 import android.os.AsyncTask;
-import com.github.tubus.vkgroupstatistics.dto.MessagesWrapper;
-import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceResponseWrapper;
+import com.github.tubus.vkgroupstatistics.restful.dto.MessagesWrapper;
+import com.github.tubus.vkgroupstatistics.restful.dto.VK_REST_SERVICE_ACTION;
+import com.github.tubus.vkgroupstatistics.restful.dto.VkRestServiceRequest;
+import com.github.tubus.vkgroupstatistics.restful.dto.VkRestServiceResponseWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -48,6 +48,9 @@ public class VkRestService extends AsyncTask<VkRestServiceRequest, Void, VkRestS
             case SUBSCRIPTION_LAST_ACTION:
                 response.setUsersList(getChangedStatusPerLastHourList(request[0].getHours(),
                         request[0].getChangedStatus()));
+                break;
+            case GET_ALL_PHOTOS_URL:
+                response.setUrls(getAllPhotoUrlsInGroup());
                 break;
         }
         return response;
@@ -106,5 +109,11 @@ public class VkRestService extends AsyncTask<VkRestServiceRequest, Void, VkRestS
         ResponseEntity<MessagesWrapper> forEntity = restTemplate.getForEntity(url, MessagesWrapper.class);
         MessagesWrapper messagesWrapper = forEntity.getBody();
         return messagesWrapper.getMessages();
+    }
+
+    private List<String> getAllPhotoUrlsInGroup() {
+        String url = BASE_VK_REST_SERVICE_URL + "/group/photoUrls/from/1/to/" + getCountAllPhotosInGroup() + "?groupName=nitherlands_can_think";
+        ResponseEntity<List> response = restTemplate.getForEntity(url, List.class);
+        return response.getBody();
     }
 }

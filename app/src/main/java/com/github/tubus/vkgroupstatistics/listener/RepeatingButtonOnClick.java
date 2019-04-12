@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
-import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
-import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
+import com.github.tubus.vkgroupstatistics.restful.dto.VK_REST_SERVICE_ACTION;
+import com.github.tubus.vkgroupstatistics.restful.dto.VkRestServiceRequest;
+import com.github.tubus.vkgroupstatistics.restful.service.VkRestService;
 
 public class RepeatingButtonOnClick implements View.OnClickListener, Runnable {
 

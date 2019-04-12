@@ -6,9 +6,9 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import com.github.tubus.vkgroupstatistics.dto.VK_REST_SERVICE_ACTION;
-import com.github.tubus.vkgroupstatistics.dto.VkRestServiceRequest;
-import com.github.tubus.vkgroupstatistics.rest.service.VkRestService;
+import com.github.tubus.vkgroupstatistics.restful.dto.VK_REST_SERVICE_ACTION;
+import com.github.tubus.vkgroupstatistics.restful.dto.VkRestServiceRequest;
+import com.github.tubus.vkgroupstatistics.restful.service.VkRestService;
 import static com.github.tubus.vkgroupstatistics.utils.FileUtils.writeFileToStorage;
 
 public class DownloadMultiplePhotoButtonOnClick implements View.OnClickListener, Runnable {

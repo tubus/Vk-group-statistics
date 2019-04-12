@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics.dto;
+package com.github.tubus.vkgroupstatistics.restful.dto;
 
 import java.util.ArrayList;
 import java.util.List;
