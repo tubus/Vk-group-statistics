@@ -1,4 +1,4 @@
-package com.github.tubus.vkgroupstatistics.dto;
+package com.github.tubus.vkgroupstatistics.restful.dto;
 
 import java.util.List;
 
@@ -16,6 +16,8 @@ public class VkRestServiceResponseWrapper {
     private String subscriptionStats;
 
     private List<String> usersList;
+
+    private List<String> urls;
 
     public Integer getCount() {
         return count;
@@ -55,5 +57,13 @@ public class VkRestServiceResponseWrapper {
 
     public void setUsersList(List<String> usersList) {
         this.usersList = usersList;
+    }
+
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
     }
 }

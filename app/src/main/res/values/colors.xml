@@ -6,4 +6,6 @@
     <color name="colorBackgroundFloating">#7DCA8A</color>
     <color name="colorButtonPrimary">#63B41313</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="black_overlay">#00FFFFFF</color>
 </resources>
